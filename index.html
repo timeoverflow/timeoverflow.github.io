@@ -181,10 +181,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-02-12 23:31:37 / 修改时间：23:36:59" itemprop="dateCreated datePublished" datetime="2021-02-12T23:31:37+08:00">2021-02-12</time>
+              <time title="创建时间：2021-02-12 23:31:37" itemprop="dateCreated datePublished" datetime="2021-02-12T23:31:37+08:00">2021-02-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-13 00:22:03" itemprop="dateModified" datetime="2021-02-13T00:22:03+08:00">2021-02-13</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -201,14 +207,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.8k</span>
+              <span>5.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -220,126 +226,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><font size="15," color="red">严正声明</font></p>
-<p><font size="5," color="red">网络不是法外之地！非法浏览国外网站是违法行为，不可利用技术手段非法突破我国网络边界。本教程仅限于个人笔记范畴，不可利用其中内容浏览非法内容、行危害我国网络安全之事。毋庸置疑，作者坚决拥护社会主义，时刻践行社会主义核心价值观，是一名遵纪守法的好青年。</font></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@author</span>: zhang zhao</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@date</span>: 2019/06/08</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@version</span>: 0.0</span></span><br><span class="line"><span class="comment">  */</span></span><br></pre></td></tr></table></figure>
-<h3 id="创建Droplets"><a href="#创建Droplets" class="headerlink" title="创建Droplets"></a>创建Droplets</h3><p>在Digital Ocean主页选择<code>Create—&gt;Droplets</code>，如图所示。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E5%88%9B%E5%BB%BADroplets.PNG" alt="创建Droplets"></p>
-<h3 id="主机设置"><a href="#主机设置" class="headerlink" title="主机设置"></a>主机设置</h3><p>在当前页面依次选择设置项。</p>
-<ol>
-<li><p>Choose an image</p>
-<p>一般选择<code>Ubuntu 18.04 x64</code>，根据自己需求也可选择其他Linux发行版。</p>
-</li>
-<li><p>Choose a plan</p>
-<p>如果服务器访问量不大（如主要用于<del>get across the Great Firewall</del>），选择最低配置的$5种类即可。</p>
-</li>
-<li><p>Add backups</p>
-<p>需要额外费用，为主机月租的20%，一般没有需求不选择。</p>
-</li>
-<li><p>Add block storage</p>
-<p>添加可以在不同主机中移动的存储，一般不需要</p>
-</li>
-<li><p>Choose a datacenter region</p>
-<p>选择主机所在地区，列出的地区如下图</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E4%B8%BB%E6%9C%BA%E5%9C%B0%E5%8C%BA%E9%80%89%E6%8B%A9.PNG" alt="主机所在地区选择"></p>
-<p>实际对于一台特定的主机，并不是所有的区域都可以选择，不能选择的地区会显示为灰色。比如图中的纽约1号计方，旧金山1号机房和阿姆斯特丹2号机房都不可选。</p>
-<p>不同地区的主机在中国大陆的访问速度也不同。可以利用Digital Ocean官方的测速工测试。网址为<a target="_blank" rel="noopener" href="http://speedtest-sfo1.digitalocean.com/">Digitl Ocean speed test</a></p>
-<p>需要指出的是，由于中国三大运营商走的国际线路不同，因此同一个机房在不同运营商的网络代理下速度也不一样。</p>
-<p>目前来看，表现比较好的机房有阿姆斯特丹、伦敦、班加罗尔。旧金山1号和新加坡机房之前速度挺快，但最近似乎比较慢，并且有被墙的风险。考虑到中美贸易战的影响，最好不要选择美国的机房，建议选择欧洲和印度的机房。现在（2019年6月8日）<strong>推荐的是班加罗尔的机房</strong>，测速很快，实际使用也比之前的新加坡机房要快。猜想的原因可能是印度距离中国比较近（但中印隔着喜马拉雅山，可能线路最终还是从欧洲或东南亚绕过来的）。</p>
-</li>
-<li><p>Select additional options</p>
-<p>可选项，推荐勾选<code>IPv6</code>，这样可以上北邮人一类的纯IPv6 pt站。</p>
-</li>
-<li><p>Add your SSH keys</p>
-<p>这一步是比较关键的一步。如果选择SSH登录主机的话，这一步必不可少，当然可以选择不用SSH登录，但我没试过。</p>
-<p>首先需要下载<code>PuTTY</code>，并安装，这一步不赘述。安装完成后在Windows开始菜单中看到的PuTTY系列如下图所示：</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/PuTTY%E8%8F%9C%E5%8D%95.PNG" alt="PuTTY菜单"></p>
-<p>首先打开<code>PuTTYgen</code>，会看到如下所示的界面。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/PuTTYgen.PNG"></p>
-<p><code>Type of key to generate</code>选择<code>RSA</code>，<code>Number of bits to generate key</code>设为<code>2048</code>即可。</p>
-<p>点击<code>Generate</code>按钮，出现进度条，此时正在产生密钥对，移动鼠标使得光标在空白区域随机移动，否则进度条会停滞不前，这样的目的是产生随机的独一无二的密钥对。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E4%BA%A7%E7%94%9F%E5%AF%86%E9%92%A5%E5%AF%B9.PNG"></p>
-<p>完成后会出现上图界面。在<code>Key passphrase</code>中输入密码，并<code>Confirm passphrase</code>，这个是私钥的密码，也将是将来登录主机时需要输入的密码。</p>
-<p>依次选择<code>Save public key</code>和<code>Save private key</code>，保存公钥和私钥在一个你能找到的位置，保存的格式为<code>ppk</code>格式，命名可以随意，但为了易于辨识，可以命名为<code>public_key.ppk</code>和<code>private_key.ppk</code>。</p>
-<p><strong>保存完毕后不要关闭此页面。</strong>把图中的那一串神秘代码（就是公钥）复制下来（全选复制即可）。现在回到Digital Ocean主机创建页面，在<code>Add your SSH keys</code>中选择<code>New SSH key</code>，在弹出的对话框中粘贴刚刚复制的公钥，如果这是一个合法的公钥代码，方框右边将会出现一个绿色的√鼓励你一下。然后给这个公钥（随便）起个名字，当然为了辨识度，还是起个有意义的名字，比如<code>pub_key_20190608</code>。这样添加公钥就完成了。</p>
-<p>这里提一下为什么上一段说“保存完毕后不要关闭此页面”。如果关闭了这个页面，也是可以通过文本编辑器打开保存的公钥ppk文件找到公钥代码的，但这时复制过来经常会出现问题，可能是换行符的问题，此时方框的右边会给你一个红色的×反鼓励你一下。</p>
-</li>
-<li><p>Finalize and create</p>
-<p>最后一步，检查一下设置信息。并且可以给自己的主机命名，这个命名将作为自己的主机名。也可以使用默认的名字。</p>
-</li>
-</ol>
-<p>到这一步就完成了一个big step了哦。可以点击<code>Create</code>按钮了。页面将跳转到Droplets，等进度条结束，就可以看到你的主机IP地址了，这标志着你已经有了一台自己的虚拟个人服务器（VPS）了。如下图所示（我有两个Droplets）：</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/InkedDroplets%E5%88%97%E8%A1%A8_LI.jpg"></p>
-<h3 id="登录主机"><a href="#登录主机" class="headerlink" title="登录主机"></a>登录主机</h3><p>现在就可以用<code>PuTTY</code>登录你的主机了。首先打开<code>PuTTY</code>（not <code>PuTTYgen</code>）。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/PuTTY%E4%B8%BB%E7%95%8C%E9%9D%A2.PNG"></p>
-<p>主界面就是这样子。在<code>Host Name (or IP address)</code>方框中填入自己的IP地址，<code>Port</code>就用默认的<code>22</code>。<code>Connection type</code>选择<code>SSH</code>。一切按照默认的来就行。</p>
-<p>接着选择<code>Connection-&gt;SSH-&gt;Auth</code>，如下所示：</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/PuTTY_Auth.PNG"></p>
-<p>点击<code>Browse...</code>，选择之前保存的私钥ppk文件即可。之后再点击<code>Session</code>按钮，回到最初的起点。在<code>Saved Sessions</code>方框中输入一个名字，当然也是可以随便起的。点击<code>Save</code>按钮，就可以看到方框中出现了一个你刚刚的命名。以后每一次要登录主机，就双击你的<code>Session</code>名，点击<code>Load</code>，在点击<code>Open</code>即可。</p>
-<p>点击<code>Open</code>后，就会出现一个黑框（并没有眼镜）。等待几秒（也许不需要等待），就会出现<code>login as:</code>几个不大不小的字，在后面输入<code>root</code>，并按<code>Enter</code>键，会出现让你输入密码的界面。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/Inked%E7%99%BB%E5%BD%95%E5%88%9D%E5%A7%8B_LI.jpg"></p>
-<p>这里要输入的密码就是保存密钥时输入的密码。输入密码时屏幕上是什么都不显示的，（闭着眼睛）输入即可。输入完了<code>Enter</code>一下。这时你就登录上了你的主机了，界面如下所示：</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/Inked%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F_LI.jpg"></p>
-<p>现在就可以准备安装科学上网的工具了。</p>
-<h3 id="使用Shadowsocks"><a href="#使用Shadowsocks" class="headerlink" title="使用Shadowsocks"></a>使用Shadowsocks</h3><p>至于什么是Shadowsocks呢，我这里就懒得说了，直接说怎么操作。一下所有输入均为命令行输入，基础是你已经登录了主机，并出现了上面那张图。</p>
-<p>首先输入<code>sudo apt update</code>，会升级什么什么玩意，不管。</p>
-<p>然后来一个<code>sudo pip3 install shadowsocks</code>，这就安装好Shadowsocks了。</p>
-<p>现在开始配置Shadowsocks。输入命令<code>sudo vim /etc/shadowsocks.json </code>，这个命令是用<code>vim</code>创建一个空的json格式文件，而我们需要在里面输入一些内容。首先按<code>i</code>键进入编辑模式，此时页面左下角会出现<code>--INSERT--</code>字样。接着输入如下代码（你可能会想着来一套<code>Ctrl-C</code>, <code>Ctrl-V</code>，但在<code>vim</code>下这个行不通，至于怎么复制粘贴，我也不会，所以暂时还是老老实实敲代码进去。在<code>vim</code>中全键盘操作，鼠标没用）：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;server&quot;</span>: <span class="string">&quot;0.0.0.0&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;server_port&quot;</span>: <span class="number">12345</span>,</span><br><span class="line">    <span class="attr">&quot;local_address&quot;</span>: <span class="string">&quot;127.0.0.1&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;local_port&quot;</span>: <span class="number">1080</span>,</span><br><span class="line">    <span class="attr">&quot;password&quot;</span>: <span class="string">&quot;your password&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;timeout&quot;</span>: <span class="number">300</span>,</span><br><span class="line">    <span class="attr">&quot;method&quot;</span>:<span class="string">&quot;aes-256-cfb&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;fast_open&quot;</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其中可以更改的地方为：</p>
-<ul>
-<li><code>server_port: 12345</code>：后面的端口号随便输入，开心就好，<code>0-65536</code>之间都是OK的，但为了稳妥，还是建议输入<code>8000</code>以后的数字。</li>
-<li><code>password: &quot;your password&quot;</code>：自己的密码，毋庸多言。这个密码是后面在Shadowsocks客户端登录时要用的</li>
-</ul>
-<p>输入完毕后检测一下有没有错。没错的话按一下<code>ESC</code>键，注意到此时左下角变成了<code>/etc/shadowsocks.json</code>等等文字。再输入<code>:wq</code>，按<code>Enter</code>键退出<code>vim</code>编辑模式。</p>
-<p>用如下命令启动Shadowsocks:</p>
-<p><code>ssserver -c /etc/shadowsocks.json -d start</code></p>
-<p>如果正常的话，Shadowsocks就启动了，会看到一些友善的提示，表明了Shadowsocks已经在运行。</p>
-<p>当然天有不测风云，运行这一步命令后可能会出现错误（如果没有那是最好了），报错形式如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: /usr/local/ssl/lib/libcrypto.so<span class="number">.1</span><span class="number">.1</span>: undefined symbol: EVP_CIPHER_CTX_cleanup</span><br><span class="line">shadowsocks start failed</span><br></pre></td></tr></table></figure>
-<p>原因是<code>openssl</code>升级到<code>1.1.0</code>以上版本，导致shadowsocks2.8.2启动报<code>undefined symbol: EVP_CIPHER_CTX_cleanup</code>错误。解决办法如下：</p>
-<ol>
-<li>输入<code>vim /usr/local/lib/python3.6/dist-packages/shadowsocks/crypto/openssl.py</code>，打开文件</li>
-<li>按<code>i</code>键进入编辑模式，找到第52行（或者附近），将<code>libcrypto.EVP_CIPHER_CTX_cleanup.argtypes</code>替换为<code>libcrypto.EVP_CIPHER_CTX_reset.argtypes</code></li>
-<li>同样找到第111行附近，同样将<code>libcrypto.EVP_CIPHER_CTX_cleanup.argtypes</code>替换为<code>libcrypto.EVP_CIPHER_CTX_reset.argtypes</code></li>
-<li>修改完毕，按<code>ESC</code>键，再输入<code>:wq</code>退出。</li>
-</ol>
-<p>这时再次运行：</p>
-<p><code>ssserver -c /etc/shadowsocks.json -d start</code></p>
-<p>就会正常启动了，并出现了一些比较友善的提示，这样服务器端的Shadowsocks就配置完成了。</p>
-<h3 id="使用BBR加速"><a href="#使用BBR加速" class="headerlink" title="使用BBR加速"></a>使用BBR加速</h3><p><code>BBR </code>可以加速TCP，尽可能跑满带宽, 并且尽量不要有排队的情况。在网络环境较差的情况下，使用<code>BBR</code>有比较好的效果。总而言之，使用<code>BBR</code>加速后网速会更快。操作步骤如下：</p>
-<ol>
-<li><p>修改系统变量</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;net.core.default_qdisc=fq&quot; &gt;&gt; /etc/sysctl.conf</span><br><span class="line">echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; &gt;&gt; /etc/sysctl.conf</span><br></pre></td></tr></table></figure></li>
-<li><p>保存生效</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure></li>
-<li><p>查看内核是否已开启<code>BBR</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
-<p>显示以下即为开启</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.tcp_available_congestion_control = bbr cubic reno</span><br></pre></td></tr></table></figure></li>
-<li><p>查看<code>BBR</code>是否启动</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure>
-<p>显示以下即为开启</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcp_bbr                20480  14</span><br></pre></td></tr></table></figure>
-<p>部分显示会有细微不同，只要没有疯狂报错即可。</p>
-</li>
-</ol>
-<p>如果以上所有内容都完成了，那么可以关掉<code>PuTTY</code>，也就是说，服务器端的事情都做完了。下面可以进行客户端的设置。</p>
-<h3 id="客户端Shadowsocks配置"><a href="#客户端Shadowsocks配置" class="headerlink" title="客户端Shadowsocks配置"></a>客户端Shadowsocks配置</h3><p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E5%AE%A2%E6%88%B7%E7%AB%AFss.PNG"></p>
-<p>如图所示，服务器IP、服务器端口、密码需要修改，填入<code>/etc/shadowsocks.json</code>配置文件里的东西就行了。点击<code>确定</code>按钮。</p>
-<p>客户端的Shadowsocks同样需要一些设置。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/ss%E8%AE%BE%E7%BD%AE.PNG"></p>
-<ul>
-<li><p><code>系统代理模式</code>选择<code>PAC模式</code></p>
-</li>
-<li><p><code>代理规则</code>选择<code>绕过局域网和大陆</code></p>
-</li>
-<li><p><code>PAC</code>那里可以选择<code>更新为GFWList</code>，稍等片刻会弹出提示更新成功。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E6%9B%B4%E6%96%B0PAC.PNG"></p>
-<p>以上步骤结束，就可以打开浏览器试试<a href="www.google.com.hk">Google</a>啦。</p>
-</li>
-</ul>
-
+          <p>本文是一年多以前还在用VPS科学上网的时候的整理的，VPS主机用的则是利用教育邮箱从<a target="_blank" rel="noopener" href="https://github.com/">GitHub</a>白嫖的<a target="_blank" rel="noopener" href="https://cloud.digitalocean.com/">DigitalOcean</a>50美元优惠券，最低配置5美元1个月，可以用10个月。配置过程其实是比较麻烦的，曾经想写个一件脚本，奈何当时一直没有学shell编程。利用VPS搭的梯子速度不快，看YouTube还经常比较卡，好处是可以学习一些Linux系统的知识，让我在研究生的预备阶段接触实验室的服务器时没那么捉襟见肘。到了后期，VPS的端口和IP经常被墙，一般端口一天之内就墙了，端口墙过几次之后整个IP就被墙了，端口被墙还好，只要22端口没被墙就可以轻松改端口，然而IP被墙就只能重新换个IP了。而<a target="_blank" rel="noopener" href="https://cloud.digitalocean.com/">DigitalOcean</a>的登录页面使用的一些服务需要翻墙才可以，这样造成了先有蛋还是先有鸡的矛盾——登录<a target="_blank" rel="noopener" href="https://cloud.digitalocean.com/">DigitalOcean</a>是为了换IP继续翻墙，但不翻墙又登录不了<a target="_blank" rel="noopener" href="https://cloud.digitalocean.com/">DigitalOcean</a>，我的解决办法是用手机上的VPN软件翻墙到<a target="_blank" rel="noopener" href="https://cloud.digitalocean.com/">DigitalOcean</a>网站上换IP，这样既麻烦，又有造成数据泄露的危险。痛定思痛，我于2020年6月份放弃了自己搭建VPS的做法，转而购买付费科学上网工具，这样节省了不少时间和经历，也至于在需要查Google的时候掉链子。</p>
+<p>这样，本文只是为了整理而整理，因为这篇文章已经写了很久了，如果因为文件在几个电脑中周转而遗失，未免有些可惜，因此整理到个人博客上，也是给初建的博客充实一下内容。再者，虽然已经不用VPS翻墙了，偶尔还是可以用VPS提供的IPv6能力登录一下<code>IPv6-only</code>的网站的，比如<a target="_blank" rel="noopener" href="http://bt.byr.cn/">北邮人PT</a>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -575,7 +471,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7 分钟</span>
+    <span title="站点阅读时长">8 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
