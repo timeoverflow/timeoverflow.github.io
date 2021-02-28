@@ -23,46 +23,46 @@
   <meta name="description" content="本文是一年多以前还在用VPS科学上网的时候的整理的，VPS主机用的则是利用教育邮箱从GitHub白嫖的DigitalOcean50美元优惠券，最低配置5美元1个月，可以用10个月。配置过程其实是比较麻烦的，曾经想写个一件脚本，奈何当时一直没有学shell编程。利用VPS搭的梯子速度不快，看YouTube还经常比较卡，好处是可以学习一些Linux系统的知识，让我在研究生的预备阶段接触实验室的服务器时">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WPS科学上网指南">
-<meta property="og:url" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:url" content="http://example.com/2021/02/12/VPS-GFW-guide/index.html">
 <meta property="og:site_name" content="时间溢出的地方">
 <meta property="og:description" content="本文是一年多以前还在用VPS科学上网的时候的整理的，VPS主机用的则是利用教育邮箱从GitHub白嫖的DigitalOcean50美元优惠券，最低配置5美元1个月，可以用10个月。配置过程其实是比较麻烦的，曾经想写个一件脚本，奈何当时一直没有学shell编程。利用VPS搭的梯子速度不快，看YouTube还经常比较卡，好处是可以学习一些Linux系统的知识，让我在研究生的预备阶段接触实验室的服务器时">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E5%88%9B%E5%BB%BADroplets.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E4%B8%BB%E6%9C%BA%E5%9C%B0%E5%8C%BA%E9%80%89%E6%8B%A9.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/PuTTY%E8%8F%9C%E5%8D%95.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/PuTTYgen.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E4%BA%A7%E7%94%9F%E5%AF%86%E9%92%A5%E5%AF%B9.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/InkedDroplets%E5%88%97%E8%A1%A8_LI.jpg">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/PuTTY%E4%B8%BB%E7%95%8C%E9%9D%A2.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/PuTTY_Auth.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/Inked%E7%99%BB%E5%BD%95%E5%88%9D%E5%A7%8B_LI.jpg">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/Inked%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F_LI.jpg">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E5%AE%A2%E6%88%B7%E7%AB%AFss.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/ss%E8%AE%BE%E7%BD%AE.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E6%9B%B4%E6%96%B0PAC.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/1.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/2.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/3.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/4.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/5.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/6.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/7.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/8.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/9.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/10.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/11.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/12.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/13.PNG">
-<meta property="og:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/14.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/%E5%88%9B%E5%BB%BADroplets.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/%E4%B8%BB%E6%9C%BA%E5%9C%B0%E5%8C%BA%E9%80%89%E6%8B%A9.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/PuTTY%E8%8F%9C%E5%8D%95.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/PuTTYgen.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/%E4%BA%A7%E7%94%9F%E5%AF%86%E9%92%A5%E5%AF%B9.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/InkedDroplets%E5%88%97%E8%A1%A8_LI.jpg">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/PuTTY%E4%B8%BB%E7%95%8C%E9%9D%A2.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/PuTTY_Auth.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/Inked%E7%99%BB%E5%BD%95%E5%88%9D%E5%A7%8B_LI.jpg">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/Inked%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F_LI.jpg">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/%E5%AE%A2%E6%88%B7%E7%AB%AFss.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/ss%E8%AE%BE%E7%BD%AE.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/%E6%9B%B4%E6%96%B0PAC.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/1.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/2.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/3.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/4.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/5.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/6.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/7.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/8.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/9.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/10.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/11.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/12.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/13.PNG">
+<meta property="og:image" content="http://example.com/2021/02/12/VPS-GFW-guide/14.PNG">
 <meta property="article:published_time" content="2021-02-12T15:31:37.000Z">
 <meta property="article:modified_time" content="2021-02-13T03:03:56.853Z">
 <meta property="article:author" content="TimeOverflow">
 <meta property="article:tag" content="科学上网">
 <meta property="article:tag" content="VPS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E5%88%9B%E5%BB%BADroplets.PNG">
+<meta name="twitter:image" content="http://example.com/2021/02/12/VPS-GFW-guide/%E5%88%9B%E5%BB%BADroplets.PNG">
 
-<link rel="canonical" href="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/">
+<link rel="canonical" href="http://example.com/2021/02/12/VPS-GFW-guide/">
 
 
 <script id="page-configurations">
@@ -193,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/12/VPS-GFW-guide/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -268,7 +268,7 @@
 <p><font size="5," color="red">网络不是法外之地！非法浏览国外网站是违法行为，不可利用技术手段非法突破我国网络边界。本教程仅限于个人笔记范畴，不可利用其中内容浏览非法内容、行危害我国网络安全之事。毋庸置疑，作者坚决拥护社会主义，时刻践行社会主义核心价值观，是一名遵纪守法的好青年。</font></p>
 <p><strong>关于如何获得GitHub教育优惠及如何注册DigitalOcean账号并充值，不在本文范围之内，本文默认已经可以开通VPS了。</strong></p>
 <h3 id="创建Droplets"><a href="#创建Droplets" class="headerlink" title="创建Droplets"></a>创建Droplets</h3><p>在Digital Ocean主页选择<code>Create—&gt;Droplets</code>，如图所示。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E5%88%9B%E5%BB%BADroplets.PNG" alt="创建Droplets"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/%E5%88%9B%E5%BB%BADroplets.PNG" alt="创建Droplets"></p>
 <h3 id="主机设置"><a href="#主机设置" class="headerlink" title="主机设置"></a>主机设置</h3><p>在当前页面依次选择设置项。</p>
 <ol>
 <li><p>Choose an image</p>
@@ -285,7 +285,7 @@
 </li>
 <li><p>Choose a datacenter region</p>
 <p>选择主机所在地区，列出的地区如下图</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E4%B8%BB%E6%9C%BA%E5%9C%B0%E5%8C%BA%E9%80%89%E6%8B%A9.PNG" alt="主机所在地区选择"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/%E4%B8%BB%E6%9C%BA%E5%9C%B0%E5%8C%BA%E9%80%89%E6%8B%A9.PNG" alt="主机所在地区选择"></p>
 <p>实际对于一台特定的主机，并不是所有的区域都可以选择，不能选择的地区会显示为灰色。比如图中的纽约1号计方，旧金山1号机房和阿姆斯特丹2号机房都不可选。</p>
 <p>不同地区的主机在中国大陆的访问速度也不同。可以利用Digital Ocean官方的测速工测试。网址为<a target="_blank" rel="noopener" href="http://speedtest-sfo1.digitalocean.com/">Digitl Ocean speed test</a></p>
 <p>需要指出的是，由于中国三大运营商走的国际线路不同，因此同一个机房在不同运营商的网络代理下速度也不一样。</p>
@@ -297,12 +297,12 @@
 <li><p>Add your SSH keys</p>
 <p>这一步是比较关键的一步。如果选择SSH登录主机的话，这一步必不可少，当然可以选择不用SSH登录，但我没试过。</p>
 <p>首先需要下载<code>PuTTY</code>，并安装，这一步不赘述。安装完成后在Windows开始菜单中看到的PuTTY系列如下图所示：</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/PuTTY%E8%8F%9C%E5%8D%95.PNG" alt="PuTTY菜单"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/PuTTY%E8%8F%9C%E5%8D%95.PNG" alt="PuTTY菜单"></p>
 <p>首先打开<code>PuTTYgen</code>，会看到如下所示的界面。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/PuTTYgen.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/PuTTYgen.PNG"></p>
 <p><code>Type of key to generate</code>选择<code>RSA</code>，<code>Number of bits to generate key</code>设为<code>2048</code>即可。</p>
 <p>点击<code>Generate</code>按钮，出现进度条，此时正在产生密钥对，移动鼠标使得光标在空白区域随机移动，否则进度条会停滞不前，这样的目的是产生随机的独一无二的密钥对。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E4%BA%A7%E7%94%9F%E5%AF%86%E9%92%A5%E5%AF%B9.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/%E4%BA%A7%E7%94%9F%E5%AF%86%E9%92%A5%E5%AF%B9.PNG"></p>
 <p>完成后会出现上图界面。在<code>Key passphrase</code>中输入密码，并<code>Confirm passphrase</code>，这个是私钥的密码，也将是将来登录主机时需要输入的密码。</p>
 <p>依次选择<code>Save public key</code>和<code>Save private key</code>，保存公钥和私钥在一个你能找到的位置，保存的格式为<code>ppk</code>格式，命名可以随意，但为了易于辨识，可以命名为<code>public_key.ppk</code>和<code>private_key.ppk</code>。</p>
 <p><strong>保存完毕后不要关闭此页面。</strong>把图中的那一串神秘代码（就是公钥）复制下来（全选复制即可）。现在回到Digital Ocean主机创建页面，在<code>Add your SSH keys</code>中选择<code>New SSH key</code>，在弹出的对话框中粘贴刚刚复制的公钥，如果这是一个合法的公钥代码，方框右边将会出现一个绿色的</p><p>&#9989;</p>鼓励你一下。然后给这个公钥（随便）起个名字，当然为了辨识度，还是起个有意义的名字，比如<code>pub_key_20190608</code>。这样添加公钥就完成了。<p></p>
@@ -313,17 +313,17 @@
 </li>
 </ol>
 <p>到这一步就完成了一个big step了哦。可以点击<code>Create</code>按钮了。页面将跳转到Droplets，等进度条结束，就可以看到你的主机IP地址了，这标志着你已经有了一台自己的虚拟个人服务器（VPS）了。如下图所示<del>（我有两个Droplets）</del>：</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/InkedDroplets%E5%88%97%E8%A1%A8_LI.jpg"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/InkedDroplets%E5%88%97%E8%A1%A8_LI.jpg"></p>
 <h3 id="登录主机"><a href="#登录主机" class="headerlink" title="登录主机"></a>登录主机</h3><p>现在就可以用<code>PuTTY</code>登录你的主机了。首先打开<code>PuTTY</code>（not <code>PuTTYgen</code>）。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/PuTTY%E4%B8%BB%E7%95%8C%E9%9D%A2.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/PuTTY%E4%B8%BB%E7%95%8C%E9%9D%A2.PNG"></p>
 <p>主界面就是这样子。在<code>Host Name (or IP address)</code>方框中填入自己的IP地址，<code>Port</code>就用默认的<code>22</code>。<code>Connection type</code>选择<code>SSH</code>。一切按照默认的来就行。</p>
 <p>接着选择<code>Connection-&gt;SSH-&gt;Auth</code>，如下所示：</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/PuTTY_Auth.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/PuTTY_Auth.PNG"></p>
 <p>点击<code>Browse...</code>，选择之前保存的私钥ppk文件即可。之后再点击<code>Session</code>按钮，回到最初的起点。在<code>Saved Sessions</code>方框中输入一个名字，当然也是可以随便起的。点击<code>Save</code>按钮，就可以看到方框中出现了一个你刚刚的命名。以后每一次要登录主机，就双击你的<code>Session</code>名，点击<code>Load</code>，在点击<code>Open</code>即可。</p>
 <p>点击<code>Open</code>后，就会出现一个黑框（并没有眼镜</p><p>&#128056;</p>）。等待几秒（也许不需要等待），就会出现<code>login as:</code>几个不大不小的字，在后面输入<code>root</code>，并按<code>Enter</code>键，会出现让你输入密码的界面。<p></p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/Inked%E7%99%BB%E5%BD%95%E5%88%9D%E5%A7%8B_LI.jpg"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/Inked%E7%99%BB%E5%BD%95%E5%88%9D%E5%A7%8B_LI.jpg"></p>
 <p>这里要输入的密码就是保存密钥时输入的密码。输入密码时屏幕上是什么都不显示的，（闭着眼睛）输入即可。输入完了<code>Enter</code>一下。这时你就登录上了你的主机了，界面如下所示：</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/Inked%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F_LI.jpg"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/Inked%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F_LI.jpg"></p>
 <p>现在就可以准备安装科学上网的工具了。</p>
 <h3 id="使用Shadowsocks"><a href="#使用Shadowsocks" class="headerlink" title="使用Shadowsocks"></a>使用Shadowsocks</h3><p>Shadowsocks是用于服务器端和客户端代理的软件。</p>
 <p>以下所有输入均为命令行输入，基础是你已经登录了主机，并出现了上面那张图。</p>
@@ -371,53 +371,53 @@
 </ol>
 <p>如果以上所有内容都完成了，那么可以关掉<code>PuTTY</code>，也就是说，服务器端的事情都做完了。下面可以进行客户端的设置。</p>
 <h3 id="客户端Shadowsocks配置"><a href="#客户端Shadowsocks配置" class="headerlink" title="客户端Shadowsocks配置"></a>客户端Shadowsocks配置</h3><p>实际上现在用的Shadowsocks客户端一般都是<a target="_blank" rel="noopener" href="https://github.com/shadowsocksrr/shadowsocksr-csharp/releases">ShadowsocksR</a>，https://可以点开这个链接下载最新版。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E5%AE%A2%E6%88%B7%E7%AB%AFss.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/%E5%AE%A2%E6%88%B7%E7%AB%AFss.PNG"></p>
 <p>如图所示，服务器IP、服务器端口、密码需要修改，填入<code>/etc/shadowsocks.json</code>配置文件里的东西就行了。点击<code>确定</code>按钮。</p>
 <p>客户端的Shadowsocks同样需要一些设置。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/ss%E8%AE%BE%E7%BD%AE.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/ss%E8%AE%BE%E7%BD%AE.PNG"></p>
 <ul>
 <li><p><code>系统代理模式</code>选择<code>PAC模式</code></p>
 </li>
 <li><p><code>代理规则</code>选择<code>绕过局域网和大陆</code></p>
 </li>
 <li><p><code>PAC</code>那里可以选择<code>更新为GFWList</code>，稍等片刻会弹出提示更新成功。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/%E6%9B%B4%E6%96%B0PAC.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/%E6%9B%B4%E6%96%B0PAC.PNG"></p>
 <p>以上步骤结束，就可以打开浏览器试试<a target="_blank" rel="noopener" href="https://www.google.com.hk/">Google</a>啦。</p>
 </li>
 </ul>
 <h3 id="Chrome设置科学上网切换"><a href="#Chrome设置科学上网切换" class="headerlink" title="Chrome设置科学上网切换"></a>Chrome设置科学上网切换</h3><h4 id="1-设置插件"><a href="#1-设置插件" class="headerlink" title="1. 设置插件"></a>1. 设置插件</h4><p>首先打开chrome商店（在左上角）搜索<code>SwitchyOmega</code>，如图所示：</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/1.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/1.PNG"></p>
 <p>点击安装，会出现一个小图标，如下图：</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/2.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/2.PNG"></p>
 <p>右键这个图标，选择<strong>选项</strong>，</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/3.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/3.PNG"></p>
 <p>第一次打开选项页面时会有一些提示什么的，全部跳过。</p>
 <p>首先点击<strong>情景模式</strong>，按照下图所示的配置一下：</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/4.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/4.PNG"></p>
 <p>点击<strong>auto switch</strong>，选择添加规则列表，因为我已经设置好了，这里无法演示，最终效果应该跟下图一样。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/5.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/5.PNG"></p>
 <p><strong>规则列表</strong>设置如下图，选择<code>AutoProxy</code>，规则列表网址填入内容为：</p>
 <p><code>https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt</code></p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/6.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/6.PNG"></p>
 <p>填好后点击<strong>立即更新情景模式</strong>，会出现一大堆网址，如下图所示：</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/7.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/7.PNG"></p>
 <p>点击<strong>应用选项</strong>，就OK了。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/8.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/8.PNG"></p>
 <h4 id="2-如何应用"><a href="#2-如何应用" class="headerlink" title="2. 如何应用"></a>2. 如何应用</h4><p>对于大部分网址，该插件会自动判断是否需要翻墙模式，比如谷歌就会翻墙，百度就不会翻墙。</p>
 <p>当一个网站为翻墙模式时，这个插件的图标会变蓝色，并且当你把鼠标移到插件图标上时，会出现一堆文字，如下图所示：</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/9.PNG" alt="翻墙模式时的插件图标"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/9.PNG" alt="翻墙模式时的插件图标"></p>
 <p>当一个网站不是翻墙模式时，这个插件的图标是黄绿色的，并且当你把鼠标移到插件图标上时，会出现少量文字，其中有<strong>直接连接</strong>的提示，如下图所示。</p>
 <p><strong>直接连接</strong>就是不翻墙的意思，<strong>proxy</strong>是一个单词，即“代理”的意思，代理就是翻墙。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/10.PNG" alt="翻墙模式时的插件图标"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/10.PNG" alt="翻墙模式时的插件图标"></p>
 <p>对于有些网站，可能不用翻墙模式就能打开，但是网页速度比较慢，或者下载速度比较慢；或者这个网站插件认为不用翻墙，但实际上必须要翻墙才能打开，这时就需要手动设置这个网站为翻墙模式。实现这样的操作有以下两种模式。</p>
 <p>一是临时翻墙，临时翻墙的意思是在chrome没有关闭之前，打开这个网站都会翻墙，但如果关掉了chrome，再打开chrome登这个网站，就有成了不翻墙模式。这个模式对于偶尔用的网站比较适用。操作方法为：左键点击插件图标，左键点击那个扫帚一样的图标（这个图标后面都会有你当前页面的网址，我这里用bing做个演示），在下拉菜单中选择<code>proxy</code>，就使得这个网站临时变成翻墙模式了。同理，如果你想使某个本来使翻墙模式的网站不翻墙，那么就可以点击<code>直接连接</code>。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/11.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/11.PNG"></p>
 <p>第二种模式是永久翻墙，适用于一些经常需要访问的网站，所谓的永久模式，就是说即使你关闭了chrome，再打开chrome登这个网站，仍然是翻墙模式。设置方法为：点击<strong>添加条件</strong>,如下图。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/12.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/12.PNG"></p>
 <p>会弹出如下界面，注意画红线的地方。<strong>条件设置</strong>表示你要设置的网址，这里是<code>*.bing.com</code>，网址中的<code>*</code>是通配符的意思，<code>*.bing.com</code>表示所有后缀是<code>.bing.com</code>的网址（如<code>www.bing.com</code>, <code>images.bing.com</code>, <code>wiki.bing.com</code>等等等等），这一栏一般不要修改。情景模式有两个：<code>proxy</code>和<code>直接连接</code>,如果你想设置这个网站为翻墙，就选择<code>proxy</code>，如果像设置为不翻墙，就选择<code>直接连接</code>。选择好后点击<code>添加条件</code>。如果你设置的是翻墙，那么你会发现插件的图标变成了蓝色，表明这个网站当前正在使用翻墙模式。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/13.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/13.PNG"></p>
 <p>设置一个网站为永久模式后，插件会记录这些网站用什么模式，可以点开插件的选项看看。下面是我的情况，一些网站我设置成了翻墙，而一些网站我设置的是不翻墙，也就是直接连接。如果你点击删除按钮，那么这个网站是否翻墙又回到插件默认的状态了。</p>
-<p><img src="/2021/02/12/WPS%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%8C%87%E5%8D%97/14.PNG"></p>
+<p><img src="/2021/02/12/VPS-GFW-guide/14.PNG"></p>
 
     </div>
 
@@ -437,11 +437,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/02/12/46-%E5%85%A8%E6%8E%92%E5%88%97and47-%E5%85%A8%E6%8E%92%E5%88%97II/" rel="prev" title="46.全排列and47.全排列II">
+    <a href="/2021/02/12/leetcode-46-47/" rel="prev" title="46.全排列and47.全排列II">
       <i class="fa fa-chevron-left"></i> 46.全排列and47.全排列II
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/02/23/Screen%E5%91%BD%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="next" title="Screen命令的使用">
+    <a href="/2021/02/23/screen-usage/" rel="next" title="Screen命令的使用">
       Screen命令的使用 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -518,20 +518,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
