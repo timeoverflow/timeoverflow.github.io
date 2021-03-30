@@ -28,7 +28,7 @@
 <meta property="og:description" content="本文是2016年3月16日写的，记录当时学习二叉树三种深度优先遍历的笔记。时隔两年，准备面试阶段重新复习二叉树，翻到之前写的这个笔记，读起来甚至觉得还不错，因此整理放在这里，原文为$\LaTeX$文件，放在GitHub上：bintree-traversal">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-03-13T08:59:03.000Z">
-<meta property="article:modified_time" content="2021-03-15T06:57:22.467Z">
+<meta property="article:modified_time" content="2021-03-15T07:05:29.203Z">
 <meta property="article:author" content="TimeOverflow">
 <meta property="article:tag" content="二叉树">
 <meta name="twitter:card" content="summary">
@@ -194,7 +194,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-15 14:57:22" itemprop="dateModified" datetime="2021-03-15T14:57:22+08:00">2021-03-15</time>
+                <time title="修改时间：2021-03-15 15:05:29" itemprop="dateModified" datetime="2021-03-15T15:05:29+08:00">2021-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,7 +258,7 @@
 <blockquote>
 <p>iterativeInorder()只能在一种情况下使用：非递归实现的执行时间更短，同时函数在程序中经常调用。否则，就应使用递归版本的中序遍历而不是迭代版本。</p>
 </blockquote>
-<p>这是因为作者认为中序遍历的迭代版本不易理解。我看了这本书的方法后，觉得比<a target="_blank" rel="noopener" href="https://book.douban.com/subject/25859528/">邓俊辉那本书</a>好理解多了。思路如下：首先向左深入，直到节点没有左子节点了。沿途把每个节点的右子节点和节点本身入栈（顺序不能反）。然后从这个没有左子节点的开始，向上访问每一个没有右子节点的节点，直到到达第一有有子节点的节点。这时先访问这个节点，再转到它的右子树。</p>
+<p>这是因为作者认为中序遍历的迭代版本不易理解。我看了这本书的方法后，觉得比<a target="_blank" rel="noopener" href="https://book.douban.com/subject/25859528/">邓俊辉那本书</a>好理解多了。思路如下：首先向左深入，直到节点没有左子节点了。沿途把每个节点的右子节点和节点本身入栈（顺序不能反）。然后从这个没有左子节点的节点开始，向上访问每一个没有右子节点的节点，直到到达第一有右子节点的节点。这时先访问这个节点，再转到它的右子树。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">iterativeInorder</span><span class="params">(BSTNode* root)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>&lt;BSTNode*&gt; travStack;</span><br><span class="line">    BSTNode* p = root;</span><br><span class="line">    <span class="keyword">while</span> (p != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        <span class="keyword">while</span> (p != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (p-&gt;right != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                travStack.push(p-&gt;right);</span><br><span class="line">            &#125;</span><br><span class="line">            travStack.push(p);</span><br><span class="line">            p = p-&gt;left;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="comment">// 到这里循环结束，p == nullptr</span></span><br><span class="line">        p = travStack.top();</span><br><span class="line">        travStack.pop();</span><br><span class="line">        <span class="keyword">while</span> (!travStack.empty() &amp;&amp; p-&gt;right == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            visit(p);  <span class="comment">//没有右子树的节点，直接访问</span></span><br><span class="line">            p = travStack.top();</span><br><span class="line">            travStack.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 到这里循环结束，p是栈里第一个有右子节点的节点</span></span><br><span class="line">        visit(p);   <span class="comment">// 先访问一下</span></span><br><span class="line">        <span class="keyword">if</span> (! travStack.empty()) &#123;</span><br><span class="line">            <span class="comment">// 栈不为空的话，转到右子树</span></span><br><span class="line">            p = travStack.top();</span><br><span class="line">            travStack.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 栈为空，打扰了，可以结束循环了</span></span><br><span class="line">            p = <span class="literal">nullptr</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
@@ -281,7 +281,10 @@
     <a href="/2021/02/23/screen-usage/" rel="prev" title="Screen命令的使用">
       <i class="fa fa-chevron-left"></i> Screen命令的使用
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/30/interview-problems/" rel="next" title="面试问题整理">
+      面试问题整理 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -356,14 +359,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
