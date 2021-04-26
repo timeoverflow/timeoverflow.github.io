@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/panda-apple.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/panda-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/panda-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="问题定义训练数据集定义为：  T &#x3D; {(x_1, y_1), (x_2, y_2), \cdots, (x_N, y_N)}其中，$x_i \in \mathbb{R}^{n}$, $y_i \in {+1, -1}$。 学习的目标是在特征空间中找到一个分离超平面$w \cdot x + b &#x3D; 0$，使得实例能够分到不同的类。$w$为法向量，其指向正类一侧，$b$为截距。线性可分支持向量机利用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SVM1-线性可分支持向量机">
+<meta property="og:url" content="http://example.com/2021/04/26/svm-1/index.html">
+<meta property="og:site_name" content="时间溢出的地方">
+<meta property="og:description" content="问题定义训练数据集定义为：  T &#x3D; {(x_1, y_1), (x_2, y_2), \cdots, (x_N, y_N)}其中，$x_i \in \mathbb{R}^{n}$, $y_i \in {+1, -1}$。 学习的目标是在特征空间中找到一个分离超平面$w \cdot x + b &#x3D; 0$，使得实例能够分到不同的类。$w$为法向量，其指向正类一侧，$b$为截距。线性可分支持向量机利用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/TimeOverflow/picgo-images/master/distance.webp">
+<meta property="article:published_time" content="2021-04-26T15:51:27.000Z">
+<meta property="article:modified_time" content="2021-04-26T15:54:06.772Z">
+<meta property="article:author" content="TimeOverflow">
+<meta property="article:tag" content="支持向量机">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/TimeOverflow/picgo-images/master/distance.webp">
+
+<link rel="canonical" href="http://example.com/2021/04/26/svm-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SVM1-线性可分支持向量机 | 时间溢出的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">时间溢出的地方</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/TimeOverflow" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/26/svm-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="TimeOverflow">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="时间溢出的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SVM1-线性可分支持向量机
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-26 23:51:27 / 修改时间：23:54:06" itemprop="dateCreated datePublished" datetime="2021-04-26T23:51:27+08:00">2021-04-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h3><p>训练数据集定义为：</p>
+<script type="math/tex; mode=display">
+T = {(x_1, y_1), (x_2, y_2), \cdots, (x_N, y_N)}</script><p>其中，$x_i \in \mathbb{R}^{n}$, $y_i \in {+1, -1}$。</p>
+<p>学习的目标是在特征空间中找到一个分离超平面$w \cdot x + b = 0$，使得实例能够分到不同的类。$w$为法向量，其指向正类一侧，$b$为截距。线性可分支持向量机利用<strong>间隔最大化</strong>求最有分离超平面，此时<strong>解是唯一的</strong>。这个唯一的解表示为：</p>
+<script type="math/tex; mode=display">
+w^* \cdot x + b^* = 0</script><p>相应的分类决策函数为：</p>
+<script type="math/tex; mode=display">
+f(x) = \operatorname{sign}(w^* \cdot x + b^*)</script><a id="more"></a>
+<h3 id="函数间隔与几何间隔"><a href="#函数间隔与几何间隔" class="headerlink" title="函数间隔与几何间隔"></a>函数间隔与几何间隔</h3><p><strong>函数间隔（functional margin）</strong></p>
+<p>一般来说，一个点距离分类超平面的远近可以表示分类预测的可信度，$|w \cdot x + b|$能够相对地表示点$x$到超平面的远近，而$w \cdot x + b$与类标记$y$符号的一致可以表示分类的正确性，所以可以用$y(w \cdot x + b)$来表示分类的正确性和可信度，这就是函数间隔，定义如下：</p>
+<blockquote>
+<p>对于给定的训练集$T$和超平面$(w, b)$，定义超平面$(w, b)$关于样本点$(x_i, y_i)$的函数间隔为：</p>
+<script type="math/tex; mode=display">
+\hat{\gamma}_i = y_i(w \cdot x_i + b)</script><p>定义超平面$(w, b)$关于数据集$T$的函数间隔为超平面$(w,b)$关于$T$中所有样本点$(x_i, y_i)$的函数间隔的最小值，即</p>
+<script type="math/tex; mode=display">
+\hat{\gamma} = \underset{i = 1, \cdots, N}{\min} \hat{\gamma}_i</script></blockquote>
+<p>函数间隔有其局限性，因为只要成比例的改变$w$和$b$，例如将它们改变为$2w$和$2b$，超平面并未发生改变，但函数间隔却变为原来的2倍。可以通过对法向量$w$加以约束，如规范化使得$\Vert w \Vert = 1$，使得间隔是确定的，这是函数间隔成为几何间隔</p>
+<p><strong>几何间隔（geometric margin）</strong></p>
+<p>首先推导实例中任一点$x$到超平面$w \cdot x + b = 0$的<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ba02b92baaaf">距离公式</a>。</p>
+<p><img src="https://raw.githubusercontent.com/TimeOverflow/picgo-images/master/distance.webp" alt></p>
+<p>上图中$x$是超平面外的一点，$x^\prime$是超平面上任一点，显然存在$w \cdot x^\prime + b = 0$。$x$到超平面的距离记为$d$，就是图上红色的线段。根据三角函数可得：</p>
+<script type="math/tex; mode=display">
+\cos \theta = \frac{d}{\Vert x - x^\prime \Vert}</script><p>$d$的方向肯定是和法向量平行的，根据余弦公式可以计算：</p>
+<script type="math/tex; mode=display">
+\vert (x - x^\prime) \cdot w \vert = \Vert x - x^\prime \Vert \Vert w \Vert \cos \theta</script><p>这里因为法向量可能反向，所以给等式左边加上绝对值。联立上面两式可得：</p>
+<script type="math/tex; mode=display">
+d = \frac{\vert (x - x^\prime) \cdot w \vert}{\Vert w \Vert}
+  = \frac{\vert w \cdot x - w \cdot x^\prime \vert}{\Vert w \Vert}</script><p>因为$w \cdot x^\prime = -b$，所以上式可以写为</p>
+<script type="math/tex; mode=display">
+d = \frac{\vert w \cdot x + b \vert}{\Vert w \Vert}</script><p>考虑到超平面两侧的类标记正负问题，当样本点$(x_i, y_i)$被超平面正确分类时，可以去掉上式的绝对值符号，将点$x_i$与超平面$(w, b)$的距离记为</p>
+<script type="math/tex; mode=display">
+\gamma_i = y_i (\frac{w}{\Vert w \Vert} \cdot x + \frac{b}{\Vert w \Vert})</script><p>这个距离定义为几何间隔。具体来说如下：</p>
+<blockquote>
+<p>对于给定的训练集$T$和超平面$(w, b)$，定义超平面$(w, b)$关于样本点$(x_i, y_i)$的几何间隔为：</p>
+<script type="math/tex; mode=display">
+\gamma_i = y_i (\frac{w}{\Vert w \Vert} \cdot x + \frac{b}{\Vert w \Vert})</script><p>定义超平面$(w, b)$关于数据集$T$的函数间隔为超平面$(w,b)$关于$T$中所有样本点$(x_i, y_i)$的函数间隔的最小值，即</p>
+<script type="math/tex; mode=display">
+\gamma = \underset{i = 1, \cdots, N}{\min} \gamma_i</script></blockquote>
+<p>从函数间隔和几何间隔的定义可知二者有以下关系：</p>
+<script type="math/tex; mode=display">
+\gamma_i = \frac{\hat{\gamma}_i}{\Vert w \Vert}</script><script type="math/tex; mode=display">
+\gamma = \frac{\gamma}{\Vert w \Vert}</script><h3 id="间隔最大化"><a href="#间隔最大化" class="headerlink" title="间隔最大化"></a>间隔最大化</h3><p>间隔最大化是指对训练数据集，找打<strong>几何间隔</strong>最大的超平面，以充分大的确信度对训练数据进行分类。这里的间隔最大化又称为<strong>硬间隔最大化</strong>。求一个最大间隔分离超平面，可以表示为如下的约束最优化问题：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+& \underset{w, b}{\max} \quad \gamma \\
+& \operatorname{s.t.} \quad y_i(\frac{w}{\Vert w \Vert}\cdot x_i + \frac{b}{\Vert w \Vert}) \ge \gamma, \quad i = 1, 2, \cdots, N
+\end{align}</script><p>上式中约束条件表示超平面关于每个训练样本的几何间隔至少是$\gamma$。</p>
+<p>考虑几何间隔与函数间隔的关系$\gamma = \frac{\hat{\gamma}}{\Vert w \Vert}$，可以将上式改写为：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+& \underset{w, b}{\max} \quad \frac{\hat{\gamma}}{\Vert w \Vert} \\
+& \operatorname{s.t.} \quad y_i(w\cdot x_i + b) \ge \hat{\gamma}, \quad i = 1, 2, \cdots, N
+\end{align}</script><blockquote>
+<p>函数间隔$\hat{\gamma}$的取值并不影响最优化问题的解。事实上，假设将$w$和$b$按比例改变为$\lambda w$和$\lambda b$，这时函数间隔将相应地变为$\lambda \hat{\gamma}$。函数间隔地这一改变对上面的最优化问题的不等式约束没有影响，对目标函数的优化也没有影响，这样即产生一个等价的最优化问题。因此，可以取$\hat{\gamma} = 1$。</p>
+</blockquote>
+<p>将$\hat{\gamma} = 1$代入上面的最优化问题，并且$\max \frac{1}{\Vert w \Vert}$和$\min \frac{1}{2} \Vert w \Vert ^2$是等价的，由此可以得到下面的线性可分支持向量机学习的最优化问题：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+& \underset{w, b}{\min} \quad \frac{1}{2}\Vert w \Vert^2 \\
+& \operatorname{s.t.} \quad y_i(w\cdot x_i + b) - 1 \ge 0, \quad i = 1, 2, \cdots, N
+\end{align}</script><p>这是一个<strong>凸二次规划（convex quadratic programming）</strong>问题。</p>
+<p>这样，线性可分支持向量机模型就转化成了上面的约束最优化问题。</p>
+<p><strong>支持向量和间隔边界</strong></p>
+<p>在线性可分情况下，训练数据集的样本点中与分离超平面距离最近的样本点的实例称为<strong>支持向量（support vector）</strong>。支持向量使得约束条件等号成立，即：</p>
+<script type="math/tex; mode=display">
+y_i (w \cdot x_i + b) - 1 = 0</script><p>对于正样本点$y_i = +1$，支持向量在超平面</p>
+<script type="math/tex; mode=display">
+H_1: w \cdot x + b = 1</script><p>上，对于负样本点$y_i = -1$，支持向量在超平面</p>
+<script type="math/tex; mode=display">
+H_2: w \cdot x + b = -1</script><p>$H_1$和$H_2$平行，并且没有实例点落在它们之间。$H_1$和$H_2$的距离称为<strong>间隔（margin）</strong>，其大小为$\frac{2}{\Vert w \Vert}$。$H_1$和$H_2$称为间隔边界。</p>
+<p>在决定分离超平面时只有支持向量起作用，其他实例点并不起作用</p>
+<h3 id="学习的对偶算法"><a href="#学习的对偶算法" class="headerlink" title="学习的对偶算法"></a>学习的对偶算法</h3><p>为了求解线性可分支持向量机的最优化问题，将它作为原始问题，应用拉格朗日对偶性，通过求解对偶问题（dual problem）得到原始问题（primal problem）的最优解，这就是线性可分支持向量机的对偶算法（dual algorithm）。</p>
+<p>对偶算法的优点，一是对偶问题往往更容易求解；二是自然引入核函数，进而推广到非线性分类问题。</p>
+<p>首先构建拉格朗日函数（Lagrange function），对每一个不等式约束（在凸优化问题中，一般将约束写为小于等于0的形式，即$1 - y_i (w \cdot x_i + b) \le 0$）引进拉格朗日乘子（Lagrange multiplier）$\alpha_i \ge 0$, $i = 1, 2, \cdots, N$，定义拉格朗日函数为：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+L(w, b, \alpha) &= \frac{1}{2} \Vert w \Vert ^2 + 
+                   \sum_{i=1}^{N}\alpha_i(1 - y_i(w \cdot x_i + b)) \\
+                &= \frac{1}{2} \Vert w \Vert ^2 - 
+                   \sum_{i=1}^{N}\alpha_i y_i(w \cdot x_i + b) +
+                   \sum_{i=1}^{N}\alpha_i
+\end{align}</script><p>其中，$\alpha = (\alpha_1, \alpha_2, \cdots, \alpha_N)^T$为拉格朗日乘子向量。</p>
+<p>根据拉格朗日对偶性，原始问题的对偶问题是极大极小问题：</p>
+<script type="math/tex; mode=display">
+\underset{\alpha}{\max} \underset{w, b}{\min} L(w, b, \alpha)</script><p>为了求得对偶问题的解，需要先求$L(w, b, \alpha)$对$w, b$的极小，再求对$\alpha$的极大。</p>
+<ol>
+<li><p>求$\underset{w, b}{\min} L(w, b, \alpha)$</p>
+<p> 将$L(w, b, \alpha)$分别对$w, b$求偏导并令其等于0：</p>
+<script type="math/tex; mode=display">
+ \nabla_w L(w, b, \alpha) = w - \sum_{i=1}^N \alpha_i y_i x_i = 0</script><script type="math/tex; mode=display">
+ \nabla_b = -\sum_{i=1}^N \alpha_i y_i = 0</script><p> 得</p>
+<script type="math/tex; mode=display">
+ w = \sum_{i=1}^N \alpha_i y_i x_i</script><script type="math/tex; mode=display">
+ \sum_{i=1}^N \alpha_i y_i = 0</script><p> 代入拉格朗日函数得</p>
+<script type="math/tex; mode=display">
+ \begin{align}
+ L(w, b, \alpha) &= \frac{1}{2}\sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) - \sum_{i=1}^N \alpha_i y_i ((\sum_{j=1}^N \alpha_j y_j x_j) \cdot x_i + b) + \sum_{i=1}^{N}\alpha_i \\
+ &= \frac{1}{2}\sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) - \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) - b\sum_{i=1}^N \alpha_i y_i + \sum_{i=1}^{N}\alpha_i \\
+ &= -\frac{1}{2}\sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) + \sum_{i=1}^{N}\alpha_i
+ \end{align}</script><p> 即</p>
+<script type="math/tex; mode=display">
+ \underset{w, b}{\min}{L(w, b, \alpha)} = -\frac{1}{2}\sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) + \sum_{i=1}^{N}\alpha_i</script></li>
+<li><p>求$\underset{w, b}{\min} L(w, b, \alpha)$对$\alpha$的极大，就是对偶问题</p>
+<script type="math/tex; mode=display">
+ \begin{align}
+ & \underset{\alpha}{\max} \quad -\frac{1}{2}\sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) + \sum_{i=1}^{N}\alpha_i \\
+ & \operatorname{s.t.} \quad \sum_{i=1}^N \alpha_i y_i = 0
+ \end{align}</script><p> 将上式的目标函数由极大转换成求极小，就得到如下与之等价的对偶最优化问题：</p>
+<script type="math/tex; mode=display">
+ \begin{align}
+ & \underset{\alpha}{\min} \quad \frac{1}{2}\sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) - \sum_{i=1}^{N}\alpha_i \\
+ & \operatorname{s.t.} \quad \sum_{i=1}^N \alpha_i y_i = 0
+ \end{align}</script></li>
+</ol>
+<p>对线性可分训练数据集，假设上面的对偶最优化问题对$\alpha$的解为$\alpha^<em> = (\alpha_1^</em>, \alpha_2^<em>, \cdots , \alpha_N^</em>)^T$，则可以得到$(w, b)$的解$w^<em>, b^</em>$。定理如下：</p>
+<blockquote>
+<p>设$\alpha^<em> = (\alpha_1^</em>, \alpha_2^<em>, \cdots , \alpha_N^</em>)^T$是对偶最优化问题的解，则存在下标$j$，使得$\alpha_j^<em> &gt; 0$，并可以按下式求解原始最优化问题的解$w^</em>, b^*$：</p>
+<script type="math/tex; mode=display">
+w^* = \sum_{i=1}^N \alpha_i^* y_i x_i</script><script type="math/tex; mode=display">
+b^* = y_j - \sum_{i=1}^N \alpha_i^* y_i (x_i \cdot x_j)</script></blockquote>
+<p>由$w^<em>$和$b^</em>$的求解式可知，$w^<em>$和$b^</em>$只依赖于训练集中对应于$\alpha_i^<em> &gt; 0$的样本点$(x_i, y_i)$，而其他样本点对$w^</em>$和$b^<em>$没有影响。<strong>把训练数据集中对应于</strong>$\alpha_i^</em> &gt; 0$<strong>的实例点</strong>$x_i \in \mathbb{R}^n$<strong>称为支持向量</strong>。</p>
+<p>对于$\alpha_i^* &gt; 0$的实例点$x_i$，有</p>
+<script type="math/tex; mode=display">
+y_i (w^* \cdot x_i + b^*) - 1 = 0</script><p>这与前面给出的支持向量的定义是一致的。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" rel="tag"># 支持向量机</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/12/batch-normalization/" rel="prev" title="Batch Normalization的原理">
+      <i class="fa fa-chevron-left"></i> Batch Normalization的原理
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">问题定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E9%97%B4%E9%9A%94%E4%B8%8E%E5%87%A0%E4%BD%95%E9%97%B4%E9%9A%94"><span class="nav-number">2.</span> <span class="nav-text">函数间隔与几何间隔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%B4%E9%9A%94%E6%9C%80%E5%A4%A7%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">间隔最大化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%AF%B9%E5%81%B6%E7%AE%97%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">学习的对偶算法</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="TimeOverflow"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">TimeOverflow</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/TimeOverflow" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;TimeOverflow" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zhangz1220@outlook.com" title="E-Mail → mailto:zhangz1220@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TimeOverflow</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">24k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">22 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
